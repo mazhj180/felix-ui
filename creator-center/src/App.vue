@@ -31,7 +31,7 @@ onMounted(() => {
   <div class=" bg h-screen ">
     <Home v-if="!isWriter"/>
     <div v-if="isWriter" class=" flex flex-col items-center justify-center h-full rounded-lg">
-      <div class=" flex items-center justify-center  w-2/3 mb-2 bg-white opacity-80 rounded-lg  " style="width: ;">
+      <div class=" flex items-center justify-center  w-2/3 mb-2 bg-white opacity-80 rounded-lg  " ">
         <img src="./assets/font-9.png" class=" h-16"/>
       </div>
       <Form />
