@@ -1,12 +1,13 @@
-import { getAllCategories, getRankings } from "@/api/book";
-import type { rank_vo, category, rankings } from "@/api/types";
+import { getAllCategories, getBooksByCategory, getRankings } from "@/api/book";
+import type { rank_vo, category, rankings, book_vo } from "@/api/types";
 import { rank_type } from "@/api/types";
 import { defineStore } from "pinia";
 
 export const useBookStore = defineStore('book',{
     state :():{ 
         categories:category[], 
-        rankings:rankings
+        rankings:rankings,
+        books_category:book_vo[]
     } => {
         return {
             categories:[],
@@ -14,7 +15,8 @@ export const useBookStore = defineStore('book',{
                 hot:[],
                 like:[],
                 score:[]
-            }
+            },
+            books_category:[]
         }
     },
     actions:{
@@ -44,6 +46,12 @@ export const useBookStore = defineStore('book',{
                             break;
                     }
                 }
+            }
+        },
+        async setBooks(categoryId:string){
+            let res = await getBooksByCategory(categoryId)
+            if (res.code == 200){
+                this.books_category = res.data
             }
         }
     }

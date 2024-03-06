@@ -10,10 +10,33 @@ const loginInfo = reactive({
 })
 let isShowD = ref(false)
 
+const message = {
+  type : 'success',
+  data : {
+    accessToken:useUserStore().userInfo.accessToken,
+    refreshToken:useUserStore().userInfo.refreshToken,
+    userId:useUserStore().userInfo.userId,
+    nickName:useUserStore().userInfo.nickName,
+    email:useUserStore().userInfo.email,
+    phoneNumber:useUserStore().userInfo.phoneNumber,
+    headImgUrl:useUserStore().userInfo.headImgUrl
+  }
+}
+
 const onSubmit = async () => {
   try {
     await useUserStore().login(loginInfo)
     if (useUserStore().loginIsSuccess){
+      message.data = {
+        accessToken:useUserStore().userInfo.accessToken,
+        refreshToken:useUserStore().userInfo.refreshToken,
+        userId:useUserStore().userInfo.userId,
+        nickName:useUserStore().userInfo.nickName,
+        email:useUserStore().userInfo.email,
+        phoneNumber:useUserStore().userInfo.phoneNumber,
+        headImgUrl:useUserStore().userInfo.headImgUrl
+      }
+      window.parent.postMessage(message,'*')
       emitter.emit('login-success',true)
     } else {
       isShowD.value = true

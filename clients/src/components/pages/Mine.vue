@@ -12,12 +12,33 @@ const showPopup = () => {
   show.value = true;
 };
 
+const receiveMessage = (e:MessageEvent) => {
+  if (e.data.type === 'success'){
+    userStore.setUserInfo(e.data.data)
+    show.value = false;
+    emitter.emit('logined')
+  }
+}
+
+const logout = () => {
+  emitter.emit('logout')
+  localStorage.removeItem('accessToken');
+  localStorage.removeItem('refreshToken');
+  localStorage.removeItem('userId');
+  localStorage.removeItem('nickName')
+  localStorage.removeItem('headImgUrl')
+  userStore.setVoid()
+  console.log(isLogined)
+}
+
 onMounted(() => {
   emitter.emit('hide-head',true)
+  window.addEventListener("message",receiveMessage,false)
 })
 
 onUnmounted(() => {
   emitter.emit('hide-head',false)
+  window.removeEventListener("message",receiveMessage)
 })
 </script>
 
@@ -39,14 +60,14 @@ onUnmounted(() => {
         <button @click="showPopup" class="bg-orange-400 text-white px-4 rounded-2xl">立即登录</button>
       </div>
       <!-- Logined show user info -->
-      <div v-if="isLogined" class="mt-4 flex h-16 ">
+      <div v-if="isLogined" class="mt-4 flex h-16 items-center">
         <img :src="headUrl" class="block w-16 rounded-full" alt="head img"/>
         <div class="flex flex-col ml-4">
           <div class="h-2">{{userStore.userInfo.nickName}}</div>
-          <div class=" mt-3">{{ userStore.userInfo.userId }} </div>
+          <div class=" mt-5 text-sm text-gray-600">ID: {{ userStore.userInfo.userId }} </div>
         </div>
         <div class=" flex-1 text-center">
-          <button class=""> 退出</button>
+          <button @click="logout()" class=" float-end mr-6"> 退出登录</button>
         </div>
       </div>
       <!-- Benefit display -->
@@ -132,7 +153,7 @@ onUnmounted(() => {
     closeable
     position="bottom"
     :style="{ height: '95%' }">
-  <iframe src="static/login.html"  width="100%" height="100%"></iframe>
+  <iframe src="http://192.168.32.124:3000/auth/"  width="100%" height="100%"></iframe>
   </van-popup>
 </template>
 

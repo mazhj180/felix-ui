@@ -6,7 +6,8 @@ export const useUserStore = defineStore('user',{
     state(){
         return {
             userInfo: {
-                token:localStorage.getItem('token'),
+                accessToken:localStorage.getItem('accessToken'),
+                refreshToken:localStorage.getItem('refreshToken'),
                 userId:localStorage.getItem('userId'),
                 nickName:localStorage.getItem('nickName'),
                 email:'',
@@ -25,6 +26,21 @@ export const useUserStore = defineStore('user',{
                 localStorage.setItem("nickName",res.data.nickName)
                 localStorage.setItem("headImgUrl",res.data.headImgUrl)
             }
+        },
+        setUserInfo(u:any) {
+            this.userInfo = u
+            localStorage.setItem("accessToken",u.accessToken)
+            localStorage.setItem("refreshToken",u.refreshToken)
+            localStorage.setItem("userId",u.userId)
+            localStorage.setItem("nickName",u.nickName)
+            localStorage.setItem("headImgUrl",u.headImgUrl)
+        },
+        setVoid(){
+            this.userInfo.accessToken = ''
+            this.userInfo.refreshToken = ''
+            this.userInfo.userId = ''
+            this.userInfo.nickName = ''
+            this.userInfo.headImgUrl = ''
         }
     }
 })

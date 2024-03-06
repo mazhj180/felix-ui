@@ -7,6 +7,12 @@
  import Bookshelf from "@/components/pages/Bookshelf.vue";
  import Bookstore from "@/components/pages/Bookstore.vue";
  import Topic from "@/components/pages/Topic.vue";
+ import  Search  from "@/components/pages/Search.vue";
+ import CategoryDetail from "@/components/pages/CategoryDetail.vue";
+ import Knowledge from "@/components/pages/Knowledge.vue";
+ import Child from "@/components/pages/Child.vue";
+ import HighScore from "@/components/pages/HighScore.vue";
+ import Latest from "@/components/pages/Latest.vue";
 
 const router = createRouter({
     history:createWebHistory(),
@@ -36,6 +42,22 @@ const router = createRouter({
                 {
                     path:'classic',
                     component:Classic
+                },
+                {
+                    path:'knowledge',
+                    component:Knowledge
+                },
+                {
+                    path:'child',
+                    component:Child
+                },
+                {
+                    path:'highScore',
+                    component:HighScore
+                },
+                {
+                    path:'latest',
+                    component:Latest
                 }
             ]
         },
@@ -60,6 +82,16 @@ const router = createRouter({
             component:Bookshelf
 
         },
+        {
+            name:'search',
+            path:'/search',
+            component:Search
+        },
+        {
+            name:'categoryDetail',
+            path:'/categoryDetail/:id',
+            component:CategoryDetail
+        }
         
     ]
 })

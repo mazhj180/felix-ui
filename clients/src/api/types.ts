@@ -66,4 +66,10 @@ export enum rank_type {
     SCORE = 'score'
 }
 
+export interface books_resp {
+    code:number,
+    message:string,
+    data:book_vo[]
+}
+
 

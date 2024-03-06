@@ -28,7 +28,7 @@ emitter.on('login-success',(value:any) => {
     </div>
     
     <!-- Bottom bar -->
-    <div class="px-4 py-2 border-t border-gray-300">
+    <div class=" fixed bottom-0 left-0 w-full px-4 py-2 border-t border-gray-300">
       <div class="flex justify-between text-sm text-gray-700">
         <a href="#" class="hover:underline">隐私权政策</a>
         <a href="#" class="hover:underline">意见反馈</a>

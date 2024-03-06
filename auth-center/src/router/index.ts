@@ -3,7 +3,7 @@ import Login from '@/components/pages/Login.vue'
 import Register from '@/components/pages/Register.vue'
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory('/auth/'),
   routes: [
     {
       path: '/',
