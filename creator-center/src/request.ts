@@ -20,6 +20,7 @@ request.interceptors.response.use((resp) => {
         case 500:
             msg = '服务器内部错误'
     }
+    return Promise.reject(error)
 })
 
 export default request

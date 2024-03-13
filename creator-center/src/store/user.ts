@@ -1,4 +1,5 @@
 import {defineStore} from 'pinia'
+import { isWriterReq } from "@/api/api";
 
 export const useUserStore = defineStore('user',{
     state(){
@@ -11,7 +12,8 @@ export const useUserStore = defineStore('user',{
                 email:'',
                 phoneNumber:'',
                 headImgUrl:localStorage.getItem('headImgUrl')
-            }
+            },
+            isWriter: localStorage.getItem('isWriter') || 'true'
         }
     },
     actions: {
@@ -30,6 +32,16 @@ export const useUserStore = defineStore('user',{
             this.userInfo.userId = ''
             this.userInfo.nickName = ''
             this.userInfo.headImgUrl = ''
+            this.isWriter = ''
+        },
+        async setIsWriter(userId:string) {
+            let res = await isWriterReq(userId)
+            if(res.data === 'no'){
+                this.isWriter = 'false'
+            } else if (res.data === 'yes'){
+                this.isWriter = 'true'
+            }
+            localStorage.setItem('isWriter',this.isWriter)
         }
         
     }

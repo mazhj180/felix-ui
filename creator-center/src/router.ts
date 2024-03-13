@@ -4,14 +4,6 @@
 const router = createRouter({
     history:createWebHistory(),
     routes:[
-        {
-            path:'/',
-            redirect:'/home'
-        },
-        {
-            path:'/form',
-            component:Form
-        }   
     ]
 })
  export default router
