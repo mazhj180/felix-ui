@@ -20,7 +20,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    z-index: 1000; /* 确保它在页面上其他元素之上 */
+    z-index: 10; /* 确保它在页面上其他元素之上 */
     background-color: white; /* 或者任何您想要的背景色 */
   }
   .active {

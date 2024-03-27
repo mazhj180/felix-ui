@@ -9,7 +9,7 @@ const toSearch = () => {
 </script>
 
 <template>
-  <div class="px-4 pt-2 pb-0 sticky-top bg-white">
+  <div class="px-4  pt-5 pb-0 sticky-top bg-white">
     <!-- Search and top bar -->
     <div class="flex justify-between">
       <div class="h-4 w-14 py-0">
@@ -48,7 +48,7 @@ const toSearch = () => {
   .sticky-top {
     position: sticky;
     top: 0;
-    z-index: 1000; /* 确保它在页面上其他元素之上 */
+    z-index: 10; /* 确保它在页面上其他元素之上 */
     --tw-bg-opacity: 1;
     /* background: url(../../assets/head_bg.png); */
   }
