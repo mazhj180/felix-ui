@@ -7,8 +7,7 @@ export const useHomepageStore = defineStore('homepage',{
                 hotRank:[],
                 popRank:[],
                 newRank:[]
-            }
-
+            },
         }
     },
     actions:{

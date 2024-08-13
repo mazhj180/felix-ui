@@ -1,6 +1,8 @@
 <script setup lang='ts'>
+import {  ref } from 'vue';
 import CreatorUI from './CreatorUI.vue';
 
+const env = ref<string>(import.meta.env.VITE_HOST)
 
 </script>
 
@@ -22,7 +24,7 @@ import CreatorUI from './CreatorUI.vue';
                     <div class="content bg-white">
                         <div class=" flex justify-center items-center iframe ">
                             <div class=""></div>
-                            <iframe class="iframe" src="http://127.0.0.1:10001/" width="314px" height="650px"></iframe>
+                            <iframe class="iframe" :src="`http://${env}:10001/`" width="314px" height="650px"></iframe>
                         </div>
                     </div>
                 </div>

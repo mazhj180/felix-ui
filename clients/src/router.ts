@@ -13,6 +13,8 @@
  import Child from "@/components/pages/Child.vue";
  import HighScore from "@/components/pages/HighScore.vue";
  import Latest from "@/components/pages/Latest.vue";
+import LookHistories from "./components/pages/lookHistories.vue";
+import TopicDetail from "./components/pages/TopicDetail.vue";
 
 const router = createRouter({
     history:createWebHistory(),
@@ -33,7 +35,14 @@ const router = createRouter({
                 },
                 {
                     path:'topic',
-                    component:Topic, 
+                    component:Topic,
+                    children:[
+                        {   
+                            name:'topic-detail',
+                            path:'detail',
+                            component:TopicDetail
+                        }
+                    ]
                 },
                 {
                     path:'recommend',
@@ -69,7 +78,14 @@ const router = createRouter({
         {
             name:'mine',
             path:'/mine',
-            component:Mine
+            component:Mine,
+            children:[
+                {
+                    name:'history',
+                    path:'history',
+                    component:LookHistories
+                }
+            ]
         },
         {
             name:'category',

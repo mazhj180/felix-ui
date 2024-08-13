@@ -8,7 +8,7 @@
     <div class="flex justify-around">
       <router-link to="/home" class="text-gray-600" active-class=" active" exact>书城</router-link>
       <router-link to="/category" class="text-gray-600" active-class=" active" >分类</router-link>
-      <router-link to="/bookshelf" class="text-gray-600" active-class=" active">发现</router-link>
+      <router-link to="/bookshelf" class="text-gray-600" active-class=" active">书架</router-link>
       <router-link to="/mine" class="text-gray-600" active-class=" active">我的</router-link>
     </div>
   </div>

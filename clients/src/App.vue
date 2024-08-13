@@ -6,7 +6,11 @@ import emitter from "@/emitter";
 import {WebSocketService} from '@/api/webSocketService';
 import { useUserStore } from "@/store/user";
 import { useForumStore } from "@/store/forum";
+import {
+  ArrowLeft
+} from '@element-plus/icons-vue'
 
+const reader_host = ref<string>(import.meta.env.VITE_READER_HOST)
 let hideHead = ref(false)
 let hideFoot = ref(false)
 let bgcolor = computed(() => {
@@ -15,7 +19,7 @@ let bgcolor = computed(() => {
 let marginBottom = computed(() => {
   return hideFoot.value?'':'content-margin'
 })
-
+const isReading = ref<boolean>(false)
 
 emitter.on('hide-head',(value:any) => {
   hideHead.value = value
@@ -82,6 +86,11 @@ emitter.on('logout',() => {
     wsService.value.disconnect();
   }
 })
+const src = ref('')
+emitter.on('reading',(uri:any) => {
+  src.value = uri
+  isReading.value = true
+})
 
 // 消息弹窗控制
 const show = ref(false);
@@ -127,6 +136,8 @@ const dianji = () => {
   console.log('qqqqww')
 }
 
+
+
 </script>
 
 <template>
@@ -137,7 +148,7 @@ const dianji = () => {
       <Foot v-if="!hideFoot"/>
     </div>
   </div> -->
-  <div class=" bg-gray-50" :class="[bgcolor,marginBottom]">
+  <div v-if="!isReading" class=" bg-gray-50" :class="[bgcolor,marginBottom]">
     <Head v-if="!hideHead"/>
     <!-- <Bookstore v-if="!hideBookstore"/> -->
     <router-view></router-view>
@@ -146,6 +157,11 @@ const dianji = () => {
   <!-- <div v-if="hideHome" class="bg-white-100">
     <Login/>
   </div> -->
+
+  <div v-if="isReading" class=" h-screen">
+    <el-button @click="isReading = false" class="fixed top-4 left-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" :icon="ArrowLeft" circle />
+    <iframe class=" border" :src="reader_host+`?uri=${src}`" height="100%" width="100%"></iframe>
+  </div>
   <van-notify @click="dianji()" v-model:show="show" type="success" background="white" >
     <!-- <van-icon name="bell" style="margin-right: 4px;" />
     <span>系统新消息</span> -->

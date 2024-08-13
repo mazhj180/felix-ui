@@ -14,7 +14,7 @@ const font = reactive({
   color: 'rgba(0, 0, 0, 0.15)',
 })
 
-const waterMark = reactive(['马峥吉','mazhj180'])
+const waterMark = reactive(['Felix Admin'])
 
 </script>
 
@@ -31,7 +31,7 @@ const waterMark = reactive(['马峥吉','mazhj180'])
         </el-tab-pane>
         <el-tab-pane label="用户管理" class=" ">
             <el-watermark :font="font" :content="waterMark" class="h-full">
-                <UserManage />
+                <UserManage  />
             </el-watermark>
             
         </el-tab-pane>
@@ -45,7 +45,7 @@ const waterMark = reactive(['马峥吉','mazhj180'])
             <CreatorManage/>
         </el-tab-pane>
         <el-tab-pane label="UI页面管理">
-            <UIManage></UIManage>
+            <UIManage/>
         </el-tab-pane>
     </el-tabs>
 

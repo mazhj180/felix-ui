@@ -14,7 +14,7 @@ const waterMark = reactive(['马峥吉','mazhj180'])
   <div class=" px-2 py-1 ">
       <Home class=" h-full" />
       <el-backtop :bottom="100">
-    <div
+    <!-- <div
       style="
         height: 100%;
         width: 100%;
@@ -26,7 +26,7 @@ const waterMark = reactive(['马峥吉','mazhj180'])
       "
     >
       UP
-    </div>
+    </div> -->
   </el-backtop>
     </div>
     

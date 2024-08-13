@@ -21,7 +21,7 @@ const toSearch = () => {
           <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
             <font-awesome-icon icon="magnifying-glass" />
           </div>
-          <input @click.native="toSearch()" class="bg-white rounded-full w-full pl-10 pr-4 py-2 text-sm border border-gray-300 focus:outline-none focus:border-gray-400 focus:ring-0" placeholder="搜索剧，我刷剧了是追剧宝" type="text">
+          <input @click.native="toSearch()" class="bg-white rounded-full w-full pl-16 pr-4 py-2 text-sm border border-gray-300 focus:outline-none focus:border-gray-400 focus:ring-0" placeholder="搜索剧，我刷剧了是追剧宝" type="text">
         </div>
       </div>
 <!--      <div class="w-14"></div>-->

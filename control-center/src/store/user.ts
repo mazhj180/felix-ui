@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 // import { isWriterReq } from "@/api/api";
-import { queryUsers } from '@/api/api'
+import { queryUsers, deleteUser, updateState } from '@/api/api'
+import type {userForUpdate} from '@/api/api'
 
 export const useUserStore = defineStore('user', {
     state:():{
@@ -64,16 +65,18 @@ export const useUserStore = defineStore('user', {
             if (res.code == 200) {
                 this.users = res.data
             }
+        },
+       
+        async delUser(userId:string,idx:number) {
+            let res = await deleteUser(userId)
+            if (res.code == 200){
+                this.users.list.splice(idx,1)
+            }
+        },
+
+        async updateState(data:userForUpdate,idx:number) {
+            let res = await updateState(data)
         }
-        // async setIsWriter(userId:string) {
-        //     let res = await isWriterReq(userId)
-        //     if(res.data === 'no'){
-        //         this.isWriter = 'false'
-        //     } else if (res.data === 'yes'){
-        //         this.isWriter = 'true'
-        //     }
-        //     localStorage.setItem('isWriter',this.isWriter)
-        // }
 
     }
 })

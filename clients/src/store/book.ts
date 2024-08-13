@@ -1,4 +1,4 @@
-import { getAllCategories, getBooksByCategory, getRankings } from "@/api/book";
+import { getAllCategories, getBooksByCategory, getGuessNotLogin, getRankings } from "@/api/book";
 import type { rank_vo, category, rankings, book_vo } from "@/api/types";
 import { rank_type } from "@/api/types";
 import { defineStore } from "pinia";
@@ -8,6 +8,7 @@ export const useBookStore = defineStore('book',{
         categories:category[], 
         rankings:rankings,
         books_category:book_vo[]
+        books_guess:book_vo[]
     } => {
         return {
             categories:[],
@@ -16,7 +17,8 @@ export const useBookStore = defineStore('book',{
                 like:[],
                 score:[]
             },
-            books_category:[]
+            books_category:[],
+            books_guess:[]
         }
     },
     actions:{
@@ -52,6 +54,16 @@ export const useBookStore = defineStore('book',{
             let res = await getBooksByCategory(categoryId)
             if (res.code == 200){
                 this.books_category = res.data
+            }
+        },
+        async setGuessBooks(){
+            try {
+                let res = await getGuessNotLogin()
+                if (res.code == 200){
+                    this.books_guess = res.data
+                }
+            } catch (error) {
+                
             }
         }
     }

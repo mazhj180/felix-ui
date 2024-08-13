@@ -1,8 +1,10 @@
 <script setup lang='ts'>
-import { reactive, ref } from 'vue';
+import { reactive, ref, watch } from 'vue';
 import pagination from '@/hooks/pagination';
 import { useUserStore } from '@/store/user';
+import debounce from '@/utils/debounce';
 
+let rootRef = ref<HTMLElement >()
 
 let userStore = useUserStore()
 
@@ -11,26 +13,68 @@ const { pageInfo, search, handleCurrentChange } = pagination()
 
 let userId = ref<string | null>(null)
 
-const statusFormatter = (row:any, column:any, value:boolean, index:any) => {
+const statusFormatter = (row: any, column: any, value: boolean, index: any) => {
     return value ? '已禁用' : '正常';
-  }
+}
 
-const handleBan = (userId:string,idx:number) => {
+
+watch(userId,(newVal) => {
+    if (newVal == null || newVal.trim() === '') {
+        search(null)
+
+    } else {
+        debounce(search,300)(newVal)
+    }
+    
+})
+
+
+const handleBan = (userId: string, idx: number) => {
+    userStore.updateState({userId,isBan:true},idx)
     userStore.users.list[idx]['isBan'] = true
 }
 
-const handleRelieve = (userId:string,idx:number) => {
+const handleRelieve = (userId: string, idx: number) => {
+    userStore.updateState({userId,isBan:false},idx)
     userStore.users.list[idx]['isBan'] = false
 }
 
-const handleDel = (userId:string,idx:number) => { }
+const handleDel = (userId: string, idx: number) => {
+    ElMessageBox.confirm(
+        '危险操作是否继续?',
+        'Warning',
+        {
+            confirmButtonText: 'OK',
+            cancelButtonText: 'Cancel',
+            type: 'warning',
+            appendTo:rootRef.value
+        }
+    )
+        .then(() => {
+            userStore.delUser(userId,idx)
+            ElMessage({
+                type: 'success',
+                message: 'Delete completed',
+                appendTo: rootRef.value,
+            })
+        })
+        .catch(() => {
+            ElMessage({
+                type: 'info',
+                message: 'Delete canceled',
+                appendTo: rootRef.value,
+            })
+        })
+}
+
 
 
 
 </script>
 
 <template>
-    <div class=" flex flex-col h-full w-full">
+    <div class=" w-full absolute z-50 flex justify-center items-center" ref="rootRef"></div>
+    <div class=" flex flex-col h-full w-full" >
 
         <!-- <div class=" px-5 ">
             <input class=" border shadow rounded-lg h-8" />
@@ -39,18 +83,20 @@ const handleDel = (userId:string,idx:number) => { }
         <!-- <div class=" px-5 text-gray-500 italic">
             全部用户
         </div> -->
-        <div class=" flex-1 px-5 py-5 shadow-2xl  ">
+        <div id="root" class=" flex-1 px-5 py-5 shadow-2xl " >
             <div class=" flex pb-10">
                 <div class=" field w-96 shadow">
                     <input v-model="userId" type="text" required autocomplete="off" id="password" class=" px-5">
                     <label for="password" title="精确搜索" data-title="精确搜索"></label>
 
                 </div>
-                <div @click="search(userId)" class=" flex justify-center items-center text-gray-500 px-5">
+                <!-- <div @click="search(userId)" class=" flex justify-center items-center text-gray-500 px-5">
                     <font-awesome-icon :icon="['fas', 'magnifying-glass']" />
-                </div>
+                </div> -->
+                
             </div>
-            <div class="no-scrollbar">
+            
+            <div class="no-scrollbar " >
                 <el-table :data="userStore.users.list" style="width: 100%; height: 380px;" class=" ">
                     <el-table-column fixed prop="userId" label="用户ID" width="150" />
                     <el-table-column prop="nickName" label="昵称" width="200" />
@@ -62,10 +108,12 @@ const handleDel = (userId:string,idx:number) => { }
                     <el-table-column prop="updateTime" label="最新操作日期" width="300" />
                     <el-table-column fixed="right" label="Operations" width="180">
                         <template #default="scope">
-                            <el-button @click="handleBan(scope.row.userId,scope.$index)" link type="info" size="small" :disabled="scope.row.isBan">禁用</el-button>
-                            <el-button @click="handleRelieve(scope.row.userId,scope.$index)" link type="info" :disabled="!scope.row.isBan"
-                                size="small">解除禁用</el-button>
-                            <el-button @click="handleDel(scope.row.userId,scope.$index)" link type="danger" size="small">删除</el-button>
+                            <el-button @click="handleBan(scope.row.userId, scope.$index)" link type="info" size="small"
+                                :disabled="scope.row.isBan">禁用</el-button>
+                            <el-button @click="handleRelieve(scope.row.userId, scope.$index)" link type="info"
+                                :disabled="!scope.row.isBan" size="small">解除禁用</el-button>
+                            <el-button @click="handleDel(scope.row.userId, scope.$index)" link type="danger"
+                                size="small">删除</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -78,6 +126,11 @@ const handleDel = (userId:string,idx:number) => { }
 </template>
 
 <style>
+
+.message {
+    display: flex;
+}
+
 .el-table__inner-wrapper::before {
 
     display: none;

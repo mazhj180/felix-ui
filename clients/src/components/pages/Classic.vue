@@ -1,18 +1,27 @@
 <script setup lang='ts'>
+import useClassic from '@/hooks/useClassic';
+import useSlideshow from '@/hooks/useSlideshow';
+import { ref } from 'vue';
+import emitter from '@/emitter';
+
+
+const minio_host = ref<string>(import.meta.env.VITE_MINIO_HOST)
+
+const {slideshows} = useSlideshow()
+const { wordLines, studyCornerData } = useClassic()
 
 </script>
 
 <template>
-     <!-- Carousel -->
-     <div class="mb-8">
-        <div class="relative">
-            <div class="overflow-hidden rounded-lg">
-                <img class="w-full" src="https://placehold.co/600x200" alt="Placeholder image for carousel" />
-            </div>
-            <div class="absolute inset-0 flex justify-between items-center px-4">
-                <button class="text-white" onclick="prevSlide()">&#10094;</button>
-                <button class="text-white" onclick="nextSlide()">&#10095;</button>
-            </div>
+    <!-- Carousel -->
+    <div class="mb-8">
+        <!-- Carousel -->
+        <div class="mb-4 ">
+            <el-carousel class="rounded-lg" trigger="click" height="150px" :autoplay="true">
+                <el-carousel-item v-for="item in slideshows" :key="item.id" :autoplay="true">
+                    <img :src="item.content">
+                </el-carousel-item>
+            </el-carousel>
         </div>
     </div>
     <!-- Study con-->
@@ -20,99 +29,15 @@
         学习角 >
     </div>
     <div class=" flex overflow-x-auto no-scrollbar space-x-4">
-        <div class="bg-white p-2 rounded-lg flex-shrink-0 shadow">
-            <img alt="Placeholder image of a book cover with a fantasy theme" class="  h-32 w-24 object-cover rounded-lg"
-                src="https://placehold.co/100x140" />
-            <div class="mt-2">
-                <div class="w-24  text-red-500 text-sm">
-                    魔法dadsad
-                </div>
-                <div class="w-24  text-gray-500 text-xs">
-                    奇幻大师 • 8万次阅读
-                </div>
-            </div>
-        </div>
-        <div class="bg-white p-2 rounded-lg flex-shrink-0">
+        <div @click="emitter.emit('reading',minio_host+'/book/'+'Linux_Book.epub')" v-for="item,idx in studyCornerData" class="bg-white p-2 rounded-lg flex-shrink-0 shadow">
             <img alt="Placeholder image of a book cover with a fantasy theme"
-                class=" shadow  h-32 w-24 object-cover rounded-lg" src="https://placehold.co/100x140" />
+                class="  h-32 w-24 object-cover rounded-lg" :src="minio_host+item.imgUrl" />
             <div class="mt-2">
-                <div class="w-24  text-red-500 text-sm">
-                    魔法dadsad
+                <div class="w-24  text-red-500 text-sm whitespace-nowrap">
+                    {{ item.bookName }}
                 </div>
-                <div class="w-24  text-gray-500 text-xs">
-                    奇幻大师 • 8万次阅读
-                </div>
-            </div>
-        </div>
-        <div class="bg-white p-2 rounded-lg flex-shrink-0">
-            <img alt="Placeholder image of a book cover with a fantasy theme" class="  h-32 w-24 object-cover rounded-lg"
-                src="https://placehold.co/100x140" />
-            <div class="mt-2">
-                <div class="w-24  text-red-500 text-sm">
-                    魔法dadsad
-                </div>
-                <div class="w-24  text-gray-500 text-xs">
-                    奇幻大师 • 8万次阅读
-                </div>
-            </div>
-        </div>
-        <div class="bg-white p-2 rounded-lg flex-shrink-0">
-            <img alt="Placeholder image of a book cover with a fantasy theme" class="  h-32 w-24 object-cover rounded-lg"
-                src="https://placehold.co/100x140" />
-            <div class="mt-2">
-                <div class="w-24  text-red-500 text-sm">
-                    魔法dadsad
-                </div>
-                <div class="w-24  text-gray-500 text-xs">
-                    奇幻大师 • 8万次阅读
-                </div>
-            </div>
-        </div>
-        <div class="bg-white p-2 rounded-lg flex-shrink-0">
-            <img alt="Placeholder image of a book cover with a fantasy theme" class="  h-32 w-24 object-cover rounded-lg"
-                src="https://placehold.co/100x140" />
-            <div class="mt-2">
-                <div class="w-24  text-red-500 text-sm">
-                    魔法dadsad
-                </div>
-                <div class="w-24  text-gray-500 text-xs">
-                    奇幻大师 • 8万次阅读
-                </div>
-            </div>
-        </div>
-        <div class="bg-white p-2 rounded-lg flex-shrink-0">
-            <img alt="Placeholder image of a book cover with a fantasy theme" class="  h-32 w-24 object-cover rounded-lg"
-                src="https://placehold.co/100x140" />
-            <div class="mt-2">
-                <div class="w-24  text-red-500 text-sm">
-                    魔法dadsad
-                </div>
-                <div class="w-24  text-gray-500 text-xs">
-                    奇幻大师 • 8万次阅读
-                </div>
-            </div>
-        </div>
-        <div class="bg-white p-2 rounded-lg flex-shrink-0">
-            <img alt="Placeholder image of a book cover with a fantasy theme" class="  h-32 w-24 object-cover rounded-lg"
-                src="https://placehold.co/100x140" />
-            <div class="mt-2">
-                <div class="w-24  text-red-500 text-sm">
-                    魔法dadsad
-                </div>
-                <div class="w-24  text-gray-500 text-xs">
-                    奇幻大师 • 8万次阅读
-                </div>
-            </div>
-        </div>
-        <div class="bg-white p-2 rounded-lg flex-shrink-0">
-            <img alt="Placeholder image of a book cover with a fantasy theme" class="  h-32 w-24 object-cover rounded-lg"
-                src="https://placehold.co/100x140" />
-            <div class="mt-2">
-                <div class="w-24  text-red-500 text-sm">
-                    魔法dadsad
-                </div>
-                <div class="w-24  text-gray-500 text-xs">
-                    奇幻大师 • 8万次阅读
+                <div class="w-24  text-gray-500 text-xs ">
+                    {{ item.authorName }} • {{ item.supportCount }}人喜欢
                 </div>
             </div>
         </div>
@@ -122,43 +47,14 @@
         字里行间 >
     </div>
     <div class="flex overflow-x-auto no-scrollbar space-x-4">
-        <div class="bg-white p-2 rounded-lg flex-shrink-0 shadow w-4/5 h-48">
-            <div class=" flex items-center h-3/5 p-2 border-b border-gray-50 ">安欣想了想，说：“所有的决定都是人在当下处境里所能做出的最好选择。”</div>
+        <div v-for="item, idx in wordLines" class="bg-white p-2 rounded-lg flex-shrink-0 shadow w-4/5 h-48">
+            <div class=" flex items-center h-3/5 p-2 border-b border-gray-50 ">{{ item.contents?.word }}</div>
             <div class=" flex mt-1 h-2/5">
-                <img alt="Placeholder image of a book cover with dark and mysterious elements" class=" w-1/6  object-cover rounded-lg " src="https://placehold.co/100x140" />
+                <img alt="Placeholder image of a book cover with dark and mysterious elements"
+                    class=" w-1/6  object-cover rounded-lg " :src="minio_host + item.contents?.image" />
                 <div class=" flex-1 p-2">
-                    <div class=" text-sm">狂飙</div>
-                    <div class=" text-xs text-gray-500 mt-1">aaaaa</div>
-                </div>
-                <div class=" flex justify-center items-center w-1/12 text-xl text-gray-200">|</div>
-                <div class=" flex flex-col justify-center w-1/6 ">
-                    <font-awesome-icon class=" text-red-400" :icon="['far', 'heart']" />
-                    <div class=" flex justify-center text-xs text-red-400 mt-2"> 666</div>
-                </div>
-            </div>
-        </div>
-        <div class="bg-white p-2 rounded-lg flex-shrink-0 shadow w-4/5 h-48">
-            <div class=" flex items-center h-3/5 p-2 border-b border-gray-50 ">“这就像治牙一样，不想治的时候，就尽量往后拖，拖到后来知道没法再拖了，就一口气全给治了。”</div>
-            <div class=" flex mt-1 h-2/5">
-                <img alt="Placeholder image of a book cover with dark and mysterious elements" class=" w-1/6 h-full object-cover rounded-lg " src="https://placehold.co/100x140" />
-                <div class=" flex-1 p-2">
-                    <div class=" text-sm">消失的13级台阶</div>
-                    <div class=" text-xs text-gray-500 mt-1">aaaaa</div>
-                </div>
-                <div class=" flex justify-center items-center w-1/12 text-xl text-gray-200">|</div>
-                <div class=" flex flex-col justify-center w-1/6 ">
-                    <font-awesome-icon class=" text-red-400" :icon="['far', 'heart']" />
-                    <div class=" flex justify-center text-xs text-red-400 mt-2"> 666</div>
-                </div>
-            </div>
-        </div>
-        <div class="bg-white p-2 rounded-lg flex-shrink-0 shadow w-4/5 h-48">
-            <div class=" flex items-center h-3/5 p-2 border-b border-gray-50 ">“就算失败，我也想知道，自己倒在距离终点多远的地方。”</div>
-            <div class=" flex mt-1 h-2/5">
-                <img alt="Placeholder image of a book cover with dark and mysterious elements" class=" w-1/6 h-full object-cover rounded-lg " src="https://placehold.co/100x140" />
-                <div class=" flex-1 p-2">
-                    <div class=" text-sm">长安的荔枝</div>
-                    <div class=" text-xs text-gray-500 mt-1">马伯庸 · 文学小说</div>
+                    <div class=" text-sm">{{ item.contents?.name }}</div>
+                    <div class=" text-xs text-gray-500 mt-1">{{ item.contents?.info }}</div>
                 </div>
                 <div class=" flex justify-center items-center w-1/12 text-xl text-gray-200">|</div>
                 <div class=" flex flex-col justify-center w-1/6 ">
@@ -168,7 +64,7 @@
             </div>
         </div>
     </div>
-   
+
 </template>
 
 <style scoped>

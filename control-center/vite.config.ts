@@ -32,6 +32,11 @@ export default defineConfig({
         changeOrigin: true,
         ws: true,
         rewrite: (path) => path.replace(/^\/socket/,"")
+      },
+      '/minio' : {
+        target: 'http://127.0.0.1:9000/',
+        changeOrigin:true,
+        rewrite: (path) => path.replace(/^\/minio/,"")
       }
     }
   },
